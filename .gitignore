@@ -103,6 +103,8 @@ celerybeat.pid
 
 # Environments
 .env
+.env.local
+.env.production
 .venv
 env/
 venv/
@@ -133,6 +135,12 @@ dmypy.json
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.staging
 
 # Media files (загруженные пользователями файлы)
 media/
