@@ -62,9 +62,12 @@ python manage.py runserver
 
 ## 🌐 Доступные URL-адреса
 
+- **Главная страница:** http://127.0.0.1:8000/
 - **Админка Django:** http://127.0.0.1:8000/admin/
 - **API курсов:** http://127.0.0.1:8000/api/courses/
 - **API уроков:** http://127.0.0.1:8000/api/lessons/
+- **Список курсов:** http://127.0.0.1:8000/courses/
+- **Список уроков:** http://127.0.0.1:8000/lessons/
 
 ## 🧪 Тестирование API
 
@@ -98,6 +101,14 @@ Studing_place/
 │   ├── serializers.py    # Сериализаторы
 │   ├── urls.py           # URL-маршруты API
 │   └── admin.py          # Админка для курсов и уроков
+├── templates/             # HTML шаблоны
+│   ├── base.html         # Базовый шаблон
+│   ├── index.html        # Главная страница
+│   ├── courses/          # Шаблоны курсов
+│   └── lessons/          # Шаблоны уроков
+├── static/                # Статические файлы
+│   ├── css/              # Стили
+│   └── js/               # JavaScript
 ├── media/                 # Загруженные файлы (не в Git)
 │   ├── avatars/          # Аватары пользователей
 │   ├── course_previews/  # Превью курсов
@@ -114,6 +125,7 @@ Studing_place/
 - **Django REST Framework 3.16.1** - API фреймворк
 - **Pillow** - работа с изображениями
 - **SQLite** - база данных (для разработки)
+- **HTML/CSS/JavaScript** - фронтенд
 
 ## 📝 Примеры использования
 

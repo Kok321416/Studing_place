@@ -19,8 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
+from courses import views as course_views
 
 urlpatterns = [
+    path("", views.index, name="index"),
     path("admin/", admin.site.urls),
     path("api/", include('courses.urls')),
+    path("courses/", course_views.course_list, name="course_list"),
+    path("lessons/", course_views.lesson_list, name="lesson_list"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

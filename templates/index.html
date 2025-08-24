@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная - Django LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-light p-5 rounded">
+            <h1 class="display-4 text-center mb-4">
+                <i class="fas fa-graduation-cap text-primary me-3"></i>
+                Добро пожаловать в Django LMS!
+            </h1>
+            <p class="lead text-center mb-4">
+                Система управления обучением на Django с Django REST Framework
+            </p>
+            <hr class="my-4">
+            <div class="row text-center">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Курсы</h5>
+                            <p class="card-text">Изучайте новые технологии с нашими курсами</p>
+                            <a href="{% url 'course_list' %}" class="btn btn-primary">
+                                <i class="fas fa-arrow-right me-1"></i>Перейти к курсам
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-play-circle fa-3x text-success mb-3"></i>
+                            <h5 class="card-title">Уроки</h5>
+                            <p class="card-text">Практические уроки для закрепления знаний</p>
+                            <a href="{% url 'lesson_list' %}" class="btn btn-success">
+                                <i class="fas fa-arrow-right me-1"></i>Перейти к урокам
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <i class="fas fa-code fa-3x text-info mb-3"></i>
+                            <h5 class="card-title">API</h5>
+                            <p class="card-text">REST API для интеграции с другими системами</p>
+                            <a href="/api/" class="btn btn-info text-white">
+                                <i class="fas fa-arrow-right me-1"></i>Изучить API
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>О проекте
+                </h5>
+            </div>
+            <div class="card-body">
+                <p>Этот проект демонстрирует возможности Django и Django REST Framework для создания системы управления обучением.</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success me-2"></i>Кастомная модель пользователя</li>
+                    <li><i class="fas fa-check text-success me-2"></i>API для курсов и уроков</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Загрузка файлов</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Админка Django</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-rocket me-2"></i>Быстрый старт
+                </h5>
+            </div>
+            <div class="card-body">
+                <p>Начните работу с системой прямо сейчас:</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/" class="btn btn-outline-success">
+                        <i class="fas fa-cog me-2"></i>Войти в админку
+                    </a>
+                    <a href="{% url 'course_list' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-book me-2"></i>Просмотреть курсы
+                    </a>
+                    <a href="/api/" class="btn btn-outline-info">
+                        <i class="fas fa-code me-2"></i>Тестировать API
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

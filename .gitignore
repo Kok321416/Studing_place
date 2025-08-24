@@ -140,6 +140,9 @@ media/
 # Static files (собранные статические файлы)
 staticfiles/
 
+# Django static files
+static/
+
 # IDE files
 .vscode/
 .idea/
