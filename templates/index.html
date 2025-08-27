@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная - Образовательная платформа{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <h1 class="animate-fade-in">Добро пожаловать на образовательную платформу!</h1>
+        <p class="animate-fade-in">Изучайте новые технологии, развивайте навыки и достигайте своих целей</p>
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <a href="{% url 'course_list' %}" class="btn btn-custom btn-lg w-100 mb-3">
+                    <i class="fas fa-book me-2"></i>Курсы
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="{% url 'lesson_list' %}" class="btn btn-custom btn-lg w-100 mb-3">
+                    <i class="fas fa-play-circle me-2"></i>Уроки
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/api/" class="btn btn-secondary-custom btn-lg w-100 mb-3">
+                    <i class="fas fa-code me-2"></i>API
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-4">
+                <a href="/api/users/register/" class="btn btn-register btn-lg w-100">
+                    <i class="fas fa-user-plus me-2"></i>Зарегистрироваться
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Качественное обучение</h3>
+                <p>Доступ к лучшим курсам и урокам от опытных преподавателей</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Сообщество</h3>
+                <p>Присоединяйтесь к сообществу единомышленников и делитесь опытом</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3>Быстрый прогресс</h3>
+                <p>Структурированные материалы для эффективного изучения</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4><i class="fas fa-info-circle me-2"></i>О платформе</h4>
+                    <p>Наша образовательная платформа предоставляет доступ к качественным курсам и урокам по различным направлениям. Мы стремимся сделать обучение доступным и эффективным для всех.</p>
+                    <a href="{% url 'course_list' %}" class="btn btn-secondary-custom">
+                        <i class="fas fa-arrow-right me-1"></i>Начать обучение
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4><i class="fas fa-cog me-2"></i>Технические возможности</h4>
+                    <p>Платформа построена на современных технологиях Django и Django REST Framework. Доступен REST API для интеграции с другими системами.</p>
+                    <a href="/api/" class="btn btn-secondary-custom">
+                        <i class="fas fa-code me-1"></i>Изучить API
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h4><i class="fas fa-user-plus me-2"></i>Присоединяйтесь к нам!</h4>
+                    <p>Создайте аккаунт и получите доступ ко всем возможностям платформы</p>
+                    <a href="/api/users/register/" class="btn btn-register btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Зарегистрироваться
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсы - Образовательная платформа{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-white text-center mb-4">
+                <i class="fas fa-book me-3"></i>Доступные курсы
+            </h1>
+            <div class="text-center">
+                <a href="{% url 'index' %}" class="btn btn-secondary-custom me-3">
+                    <i class="fas fa-home me-2"></i>На главную
+                </a>
+                <a href="{% url 'lesson_list' %}" class="btn btn-secondary-custom me-3">
+                    <i class="fas fa-play-circle me-2"></i>Все уроки
+                </a>
+                <a href="/api/users/register/" class="btn btn-register">
+                    <i class="fas fa-user-plus me-2"></i>Регистрация
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% if courses %}
+        <div class="row">
+            {% for course in courses %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    {% if course.preview %}
+                        <img src="{{ course.preview.url }}" class="card-img-top" alt="{{ course.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-image fa-3x text-white-50"></i>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                        
+                        <div class="mb-3">
+                            <small class="text-white-50">
+                                <i class="fas fa-calendar me-1"></i>
+                                Создан: {{ course.created_at|date:"d.m.Y" }}
+                            </small>
+                        </div>
+                        
+                        {% if course.owner %}
+                        <div class="mb-3">
+                            <small class="text-white-50">
+                                <i class="fas fa-user me-1"></i>
+                                Автор: {{ course.owner.get_full_name|default:course.owner.email }}
+                            </small>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-custom">
+                                <i class="fas fa-eye me-2"></i>Просмотреть
+                            </a>
+                            <a href="#" class="btn btn-secondary-custom">
+                                <i class="fas fa-edit me-2"></i>Редактировать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-book-open fa-3x text-white-50 mb-3"></i>
+                        <h4>Курсы не найдены</h4>
+                        <p>Пока нет доступных курсов. Зайдите позже!</p>
+                        <a href="{% url 'index' %}" class="btn btn-custom me-3">
+                            <i class="fas fa-home me-2"></i>Вернуться на главную
+                        </a>
+                        <a href="/api/users/register/" class="btn btn-register">
+                            <i class="fas fa-user-plus me-2"></i>Зарегистрироваться
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4><i class="fas fa-code me-2"></i>API информация</h4>
+                    <p>Для работы с курсами через API используйте следующие эндпоинты:</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Курсы:</h6>
+                            <ul class="list-unstyled">
+                                <li><code>GET /api/courses/</code> - список курсов</li>
+                                <li><code>POST /api/courses/</code> - создание курса</li>
+                                <li><code>GET /api/courses/{id}/</code> - детали курса</li>
+                                <li><code>PUT /api/courses/{id}/</code> - обновление курса</li>
+                                <li><code>DELETE /api/courses/{id}/</code> - удаление курса</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Уроки:</h6>
+                            <ul class="list-unstyled">
+                                <li><code>GET /api/lessons/</code> - список уроков</li>
+                                <li><code>POST /api/lessons/</code> - создание урока</li>
+                                <li><code>GET /api/lessons/{id}/</code> - детали урока</li>
+                                <li><code>PUT /api/lessons/{id}/</code> - обновление урока</li>
+                                <li><code>DELETE /api/lessons/{id}/</code> - удаление урока</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <a href="/api/" class="btn btn-secondary-custom me-3">
+                            <i class="fas fa-external-link-alt me-2"></i>Открыть API
+                        </a>
+                        <a href="/api/users/register/" class="btn btn-register">
+                            <i class="fas fa-user-plus me-2"></i>Зарегистрироваться
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

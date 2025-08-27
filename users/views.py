@@ -1,16 +1,29 @@
 from django.shortcuts import render
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from .models import User, Payment
-from .serializers import PaymentSerializer
-from .filters import PaymentFilter
+from rest_framework import viewsets, generics
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from django.contrib.auth import get_user_model
+from .models import User
+from .serializers import UserRegistrationSerializer, UserProfileSerializer, UserListSerializer
 
-# Create your views here.
+User = get_user_model()
 
-class PaymentViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
+class UserRegistrationView(generics.CreateAPIView):
+    """Регистрация пользователей - доступна для неавторизованных"""
+    queryset = User.objects.all()
+    serializer_class = UserRegistrationSerializer
+    permission_classes = [AllowAny]
+
+class UserProfileView(generics.RetrieveUpdateAPIView):
+    """Профиль пользователя - доступен только авторизованным"""
+    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
-    filterset_class = PaymentFilter
-    ordering_fields = ['payment_date']
-    ordering = ['-payment_date']  # По умолчанию сортировка по дате (новые сначала)
+
+    def get_object(self):
+        return self.request.user
+
+class UserListView(generics.ListAPIView):
+    """Список пользователей - доступен только авторизованным"""
+    queryset = User.objects.all()
+    serializer_class = UserListSerializer
+    permission_classes = [IsAuthenticated]
