@@ -9,7 +9,7 @@ Function views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+    2. Add a URL to urlpatterns:  path('other_app/', Home.as_view(), name='home')
 Including another URLconf
     1. Import the include function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
@@ -20,15 +20,24 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from config import views
+from courses.views import course_list_view, lesson_list_view
+from users.views import user_list_view, index_view
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    # HTML Pages
+    path("", index_view, name='index'),  # Главная страница
+    path("courses/", course_list_view, name='course_list'),  # HTML страница курсов
+    path("lessons/", lesson_list_view, name='lesson_list'),  # HTML страница уроков
+    path("users/", user_list_view, name='user_list'),  # HTML страница пользователей
+    
+    # Admin and API
     path("admin/", admin.site.urls),
-    path("api/", include('courses.urls')),
-    path("api/users/", include('users.urls')),
+    
+    # JWT Authentication endpoints (открытые для неавторизованных)
     path("api/token/", TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path("api/token/refresh/", TokenRefreshView.as_view(), name='token_refresh'),
-    path("courses/", include('courses.urls')),
-    path("lessons/", include('courses.urls')),
+    
+    # API endpoints
+    path("api/courses/", include('courses.urls')),
+    path("api/users/", include('users.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

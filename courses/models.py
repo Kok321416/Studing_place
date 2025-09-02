@@ -34,3 +34,28 @@ class Lesson(models.Model):
     def __str__(self):
         return self.title
 
+
+class Subscription(models.Model):
+    """Модель подписки пользователя на обновления курса"""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        verbose_name='Пользователь',
+        related_name='subscriptions'
+    )
+    course = models.ForeignKey(
+        Course, 
+        on_delete=models.CASCADE, 
+        verbose_name='Курс',
+        related_name='subscriptions'
+    )
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='Дата подписки')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+        unique_together = ('user', 'course')  # Один пользователь может подписаться на курс только один раз
+
+    def __str__(self):
+        return f'{self.user.email} подписан на "{self.course.title}"'

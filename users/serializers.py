@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from .models import Payment
 
 User = get_user_model()
 
@@ -41,3 +42,9 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email', 'first_name', 'last_name', 'phone', 'city']
+
+class PaymentSerializer(serializers.ModelSerializer):
+    """Сериализатор для платежей"""
+    class Meta:
+        model = Payment
+        fields = '__all__'

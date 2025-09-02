@@ -7,6 +7,9 @@ class IsModerator(permissions.BasePermission):
     но не могут создавать и удалять.
     """
     def has_permission(self, request, view):
+        # Модераторы НЕ могут создавать и удалять
+        if view.action in ['create', 'destroy']:
+            return False
         return request.user.is_authenticated and request.user.groups.filter(name='Модераторы').exists()
 
 class IsOwner(permissions.BasePermission):
