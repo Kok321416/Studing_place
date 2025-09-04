@@ -72,3 +72,9 @@ class YouTubeURLValidator:
             (),
             {'field': self.field}
         )
+    
+    def __fields__(self):
+        """Возвращает список полей, которые валидирует данный валидатор"""
+        if self.field:
+            return [self.field]
+        return []
