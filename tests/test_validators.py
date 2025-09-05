@@ -1,11 +1,11 @@
 """
 Тестовый файл для проверки валидаторов YouTube ссылок.
-Запуск: python manage.py test courses.test_validators
+Запуск: python manage.py test tests.test_validators
 """
 
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from .validators import validate_youtube_url, YouTubeURLValidator
+from courses.validators import validate_youtube_url, YouTubeURLValidator
 
 
 class YouTubeValidatorTest(TestCase):

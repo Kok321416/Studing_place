@@ -1,0 +1,49 @@
+[run]
+source = .
+omit = 
+    */migrations/*
+    */venv/*
+    */env/*
+    */tests/*
+    manage.py
+    */settings/*
+    */__pycache__/*
+    */node_modules/*
+    */static/*
+    */templates/*
+    */fixtures/*
+    */media/*
+    */htmlcov/*
+    */coverage/*
+    */test_*
+    */conftest.py
+    */pytest.ini
+    */tox.ini
+    */setup.py
+    */setup.cfg
+    */pyproject.toml
+    */requirements.txt
+    */README.md
+    */LICENSE
+    */.gitignore
+    */.coveragerc
+    */manage.py
+    */wsgi.py
+    */asgi.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    if settings.DEBUG
+    raise AssertionError
+    raise NotImplementedError
+    if 0:
+    if __name__ == .__main__.:
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod
+
+[html]
+directory = htmlcov
+title = Coverage Report

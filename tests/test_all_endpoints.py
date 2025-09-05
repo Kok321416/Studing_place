@@ -5,7 +5,7 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Course, Lesson, Subscription
+from courses.models import Course, Lesson, Subscription
 
 User = get_user_model()
 
