@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 from .models import Course, Lesson, Subscription
 from .serializers import CourseSerializer, LessonSerializer
 from .permissions import IsModeratorOrOwnerForModify, IsOwner, IsModeratorOrOwner, IsModerator
@@ -23,6 +25,13 @@ def lesson_list_view(request):
 
 # API Views
 class CourseViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet для управления курсами.
+    
+    Позволяет создавать, просматривать, обновлять и удалять курсы.
+    Модераторы могут редактировать все курсы, но не могут создавать или удалять.
+    Обычные пользователи могут создавать курсы и управлять только своими.
+    """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = [IsAuthenticated]
@@ -53,6 +62,78 @@ class CourseViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated]
         
         return [permission() for permission in permission_classes]
+
+    @swagger_auto_schema(
+        operation_summary="Создать курс",
+        operation_description="Создает новый курс. Доступно только обычным пользователям.",
+        responses={
+            201: CourseSerializer,
+            400: "Ошибка валидации данных",
+            403: "Доступ запрещен"
+        }
+    )
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
+        operation_summary="Получить список курсов",
+        operation_description="Возвращает список курсов с пагинацией и фильтрацией",
+        responses={
+            200: CourseSerializer(many=True),
+            401: "Не авторизован"
+        }
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
+        operation_summary="Получить курс",
+        operation_description="Возвращает детальную информацию о курсе",
+        responses={
+            200: CourseSerializer,
+            404: "Курс не найден"
+        }
+    )
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
+        operation_summary="Обновить курс",
+        operation_description="Обновляет информацию о курсе. Доступно владельцу или модератору.",
+        responses={
+            200: CourseSerializer,
+            400: "Ошибка валидации данных",
+            403: "Доступ запрещен",
+            404: "Курс не найден"
+        }
+    )
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
+        operation_summary="Частично обновить курс",
+        operation_description="Частично обновляет информацию о курсе. Доступно владельцу или модератору.",
+        responses={
+            200: CourseSerializer,
+            400: "Ошибка валидации данных",
+            403: "Доступ запрещен",
+            404: "Курс не найден"
+        }
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
+        operation_summary="Удалить курс",
+        operation_description="Удаляет курс. Доступно только владельцу.",
+        responses={
+            204: "Курс удален",
+            403: "Доступ запрещен",
+            404: "Курс не найден"
+        }
+    )
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         """Автоматически назначаем владельца при создании курса"""

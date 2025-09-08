@@ -48,3 +48,39 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
+        read_only_fields = ['user', 'payment_date', 'stripe_payment_intent_id', 'stripe_session_id', 'stripe_product_id', 'stripe_price_id', 'payment_url', 'status']
+
+
+class PaymentCreateSerializer(serializers.ModelSerializer):
+    """Сериализатор для создания платежа"""
+    course_id = serializers.IntegerField(write_only=True, required=False)
+    lesson_id = serializers.IntegerField(write_only=True, required=False)
+    
+    class Meta:
+        model = Payment
+        fields = ['course_id', 'lesson_id', 'amount', 'payment_method']
+        read_only_fields = ['user', 'payment_date', 'stripe_payment_intent_id', 'stripe_session_id', 'stripe_product_id', 'stripe_price_id', 'payment_url', 'status']
+    
+    def validate(self, attrs):
+        course_id = attrs.get('course_id')
+        lesson_id = attrs.get('lesson_id')
+        
+        if not course_id and not lesson_id:
+            raise serializers.ValidationError("Необходимо указать либо курс, либо урок")
+        
+        if course_id and lesson_id:
+            raise serializers.ValidationError("Нельзя указать и курс, и урок одновременно")
+        
+        return attrs
+
+
+class PaymentResponseSerializer(serializers.ModelSerializer):
+    """Сериализатор для ответа с данными платежа"""
+    course_title = serializers.CharField(source='course.title', read_only=True)
+    lesson_title = serializers.CharField(source='lesson.title', read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    
+    class Meta:
+        model = Payment
+        fields = ['id', 'amount', 'payment_method', 'payment_date', 'status', 'status_display', 
+                 'payment_url', 'course_title', 'lesson_title', 'stripe_session_id']

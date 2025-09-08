@@ -7,17 +7,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-purple: #8B5CF6;
-            --secondary-purple: #A78BFA;
-            --dark-purple: #6D28D9;
-            --light-purple: #DDD6FE;
-            --accent-purple: #C084FC;
+            --primary-blue: #3B82F6;
+            --secondary-blue: #60A5FA;
+            --dark-blue: #1E40AF;
+            --light-blue: #DBEAFE;
+            --accent-blue: #93C5FD;
+            --cyan-blue: #06B6D4;
+            --light-cyan: #CFFAFE;
             --white: #FFFFFF;
             --gray-100: #F3F4F6;
             --gray-200: #E5E7EB;
             --gray-800: #1F2937;
-            --shadow: 0 10px 25px rgba(139, 92, 246, 0.15);
-            --shadow-hover: 0 20px 40px rgba(139, 92, 246, 0.25);
+            --shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+            --shadow-hover: 0 20px 40px rgba(59, 130, 246, 0.25);
         }
 
         * {
@@ -28,13 +30,13 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--light-purple) 0%, var(--white) 100%);
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-cyan) 50%, var(--white) 100%);
             min-height: 100vh;
             color: var(--gray-800);
         }
 
         .navbar {
-            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--dark-purple) 100%);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
             padding: 1rem 2rem;
             box-shadow: var(--shadow);
             position: sticky;
@@ -74,6 +76,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            border: 1px solid transparent;
         }
 
         .nav-links a::before {
@@ -93,6 +96,7 @@
 
         .nav-links a:hover {
             background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
         }
 
@@ -105,7 +109,7 @@
         .hero-section {
             text-align: center;
             padding: 4rem 0;
-            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--accent-purple) 100%);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--cyan-blue) 100%);
             border-radius: 20px;
             margin-bottom: 3rem;
             color: var(--white);
@@ -126,51 +130,37 @@
 
         .btn {
             display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--white) 0%, var(--light-purple) 100%);
-            color: var(--primary-purple);
+            padding: 0.8rem 1.5rem;
+            background: var(--white);
+            color: var(--primary-blue);
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 25px;
             font-weight: 600;
             transition: all 0.3s ease;
-            border: none;
+            border: 2px solid var(--primary-blue);
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--accent-purple) 100%);
-            transition: left 0.3s ease;
-            z-index: -1;
-        }
-
-        .btn:hover::before {
-            left: 0;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
         }
 
         .btn:hover {
+            background: var(--primary-blue);
             color: var(--white);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
         }
 
         .btn-secondary {
             background: transparent;
             color: var(--white);
             border: 2px solid var(--white);
+            border-radius: 25px;
         }
 
         .btn-secondary:hover {
             background: var(--white);
-            color: var(--primary-purple);
+            color: var(--primary-blue);
         }
 
         .card {
@@ -189,7 +179,7 @@
         }
 
         .card-title {
-            color: var(--primary-purple);
+            color: var(--primary-blue);
             font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 700;
@@ -208,7 +198,7 @@
         }
 
         .feature-card {
-            background: linear-gradient(135deg, var(--white) 0%, var(--light-purple) 100%);
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-blue) 100%);
             border-radius: 20px;
             padding: 2rem;
             text-align: center;
@@ -219,18 +209,18 @@
 
         .feature-card:hover {
             transform: translateY(-10px);
-            border-color: var(--primary-purple);
+            border-color: var(--primary-blue);
             box-shadow: var(--shadow-hover);
         }
 
         .feature-icon {
             font-size: 3rem;
-            color: var(--primary-purple);
+            color: var(--primary-blue);
             margin-bottom: 1rem;
         }
 
         .footer {
-            background: linear-gradient(135deg, var(--dark-purple) 0%, var(--primary-purple) 100%);
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
             color: var(--white);
             text-align: center;
             padding: 2rem;
@@ -239,7 +229,7 @@
 
         .api-endpoint {
             background: var(--gray-100);
-            border-left: 4px solid var(--primary-purple);
+            border-left: 4px solid var(--primary-blue);
             padding: 1rem;
             margin: 1rem 0;
             border-radius: 0 10px 10px 0;
@@ -285,6 +275,7 @@
             <ul class="nav-links">
                 <li><a href="/"><i class="fas fa-home"></i> Главная</a></li>
                 <li><a href="/courses/"><i class="fas fa-book"></i> Курсы</a></li>
+                <li><a href="/courses-with-payment/"><i class="fas fa-credit-card"></i> Курсы с оплатой</a></li>
                 <li><a href="/lessons/"><i class="fas fa-play"></i> Уроки</a></li>
                 <li><a href="/users/"><i class="fas fa-users"></i> Пользователи</a></li>
                 <li><a href="/admin/"><i class="fas fa-cog"></i> Админка</a></li>
