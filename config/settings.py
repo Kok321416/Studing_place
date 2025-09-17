@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'drf_yasg',
+    'django_celery_beat',
+    'django_celery_results',
     'users',      # Добавляем после создания
     'courses',
 ]
@@ -163,7 +165,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 LANGUAGE_CODE = "ru-ru"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
@@ -209,3 +211,24 @@ REDOC_SETTINGS = {
 STRIPE_PUBLISHABLE_KEY = 'pk_test_your_publishable_key_here'
 STRIPE_SECRET_KEY = 'sk_test_your_secret_key_here'
 STRIPE_WEBHOOK_SECRET = 'whsec_your_webhook_secret_here'
+
+# Celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Moscow'
+CELERY_ENABLE_UTC = True
+
+# Email settings для отправки уведомлений
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'  # Замените на ваш email
+EMAIL_HOST_PASSWORD = 'your_app_password'  # Замените на пароль приложения
+DEFAULT_FROM_EMAIL = 'Studing Place <noreply@studingplace.local>'
+
+# Настройки для блокировки неактивных пользователей
+INACTIVE_USER_DAYS = 30  # Количество дней неактивности для блокировки

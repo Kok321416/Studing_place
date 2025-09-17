@@ -73,3 +73,19 @@ class Payment(models.Model):
 
     def __str__(self):
         return f'Платеж {self.user.email} - {self.amount} руб. ({self.get_status_display()})'
+
+
+class Subscription(models.Model):
+    """Модель подписки на обновления курса"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    course = models.ForeignKey('courses.Course', on_delete=models.CASCADE, verbose_name='Курс')
+    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата подписки')
+    
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+        unique_together = ['user', 'course']  # Один пользователь может подписаться на курс только один раз
+    
+    def __str__(self):
+        return f'{self.user.email} подписан на {self.course.title}'

@@ -11,6 +11,7 @@ from .models import Course, Lesson, Subscription
 from .serializers import CourseSerializer, LessonSerializer
 from .permissions import IsModeratorOrOwnerForModify, IsOwner, IsModeratorOrOwner, IsModerator
 from .paginators import CoursesPagination, LessonsPagination
+from .tasks import send_course_update_notification_async, send_lesson_update_notification_async
 
 # Create your views here.
 
@@ -108,7 +109,11 @@ class CourseViewSet(viewsets.ModelViewSet):
         }
     )
     def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
+        response = super().update(request, *args, **kwargs)
+        # Отправляем асинхронное уведомление об обновлении курса
+        if response.status_code == 200:
+            send_course_update_notification_async.delay(self.get_object().id)
+        return response
     
     @swagger_auto_schema(
         operation_summary="Частично обновить курс",
@@ -121,7 +126,11 @@ class CourseViewSet(viewsets.ModelViewSet):
         }
     )
     def partial_update(self, request, *args, **kwargs):
-        return super().partial_update(request, *args, **kwargs)
+        response = super().partial_update(request, *args, **kwargs)
+        # Отправляем асинхронное уведомление об обновлении курса
+        if response.status_code == 200:
+            send_course_update_notification_async.delay(self.get_object().id)
+        return response
     
     @swagger_auto_schema(
         operation_summary="Удалить курс",
@@ -200,6 +209,20 @@ class LessonDetailView(RetrieveUpdateDestroyAPIView):
         if self.request.user.groups.filter(name='Модераторы').exists():
             return Lesson.objects.all()
         return Lesson.objects.filter(owner=self.request.user)
+    
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+        # Отправляем асинхронное уведомление об обновлении урока
+        if response.status_code == 200:
+            send_lesson_update_notification_async.delay(self.get_object().id)
+        return response
+    
+    def partial_update(self, request, *args, **kwargs):
+        response = super().partial_update(request, *args, **kwargs)
+        # Отправляем асинхронное уведомление об обновлении урока
+        if response.status_code == 200:
+            send_lesson_update_notification_async.delay(self.get_object().id)
+        return response
 
 
 class SubscriptionAPIView(APIView):
