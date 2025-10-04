@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Уроки - Django LMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-play-circle me-2"></i>Уроки</h1>
+            <a href="/admin/courses/lesson/add/" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>Добавить урок
+            </a>
+        </div>
+        
+        {% if lessons %}
+        <div class="row">
+            {% for lesson in lessons %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    {% if lesson.preview %}
+                    <img src="{{ lesson.preview.url }}" class="card-img-top" alt="{{ lesson.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ lesson.title }}</h5>
+                        <p class="card-text text-muted">
+                            {{ lesson.description|truncatewords:15 }}
+                        </p>
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-book me-1"></i>
+                                Курс: {{ lesson.course.title }}
+                            </small>
+                        </div>
+                        {% if lesson.video_link %}
+                        <div class="mb-3">
+                            <a href="{{ lesson.video_link }}" target="_blank" class="btn btn-sm btn-outline-danger">
+                                <i class="fab fa-youtube me-1"></i>Смотреть видео
+                            </a>
+                        </div>
+                        {% endif %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/admin/courses/lesson/{{ lesson.id }}/change/" class="btn btn-sm btn-outline-success">
+                                <i class="fas fa-edit me-1"></i>Редактировать
+                            </a>
+                            <a href="/admin/courses/lesson/{{ lesson.id }}/change/" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i>Просмотреть
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-play-circle fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">Уроки не найдены</h4>
+            <p class="text-muted">Создайте первый урок через админку</p>
+            <a href="/admin/courses/lesson/add/" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>Создать урок
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- API информация -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-code me-2"></i>API для уроков
+                </h5>
+            </div>
+            <div class="card-body">
+                <p>Используйте REST API для работы с уроками:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Получить список уроков:</h6>
+                        <code>GET /api/lessons/</code>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Создать новый урок:</h6>
+                        <code>POST /api/lessons/</code>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="/api/lessons/" class="btn btn-outline-success">
+                        <i class="fas fa-external-link-alt me-2"></i>Тестировать API
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

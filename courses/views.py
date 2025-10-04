@@ -17,3 +17,15 @@ class LessonListCreateView(ListCreateAPIView):
 class LessonDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+
+
+# HTML Views
+def course_list(request):
+    """Отображение списка курсов в HTML"""
+    courses = Course.objects.all()
+    return render(request, 'courses/course_list.html', {'courses': courses})
+
+def lesson_list(request):
+    """Отображение списка уроков в HTML"""
+    lessons = Lesson.objects.all()
+    return render(request, 'lessons/lesson_list.html', {'lessons': lessons})
