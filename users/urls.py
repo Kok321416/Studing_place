@@ -6,7 +6,7 @@ router = DefaultRouter()
 router.register(r'payments', PaymentViewSet, basename='payment')
 
 urlpatterns = [
-    path('register/', UserRegistrationView.as_view(), name='user-register'),
+    path('register/', UserRegistrationView.as_view(), name='user-registration'),
     path('profile/', UserProfileView.as_view(), name='user-profile'),
     path('list/', UserListView.as_view(), name='user-list'),
     path('', include(router.urls)),

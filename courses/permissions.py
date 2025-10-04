@@ -8,7 +8,11 @@ class IsModerator(permissions.BasePermission):
     """
     def has_permission(self, request, view):
         # Модераторы НЕ могут создавать и удалять
-        if view.action in ['create', 'destroy']:
+        # Проверяем action только если он существует (ViewSet)
+        if hasattr(view, 'action') and view.action in ['create', 'destroy']:
+            return False
+        # Для Generic views проверяем HTTP метод
+        if request.method in ['POST', 'DELETE']:
             return False
         return request.user.is_authenticated and request.user.groups.filter(name='Модераторы').exists()
 
@@ -43,3 +47,13 @@ class IsModeratorOrOwnerForModify(permissions.BasePermission):
         if request.user.groups.filter(name='Модераторы').exists():
             return True
         return obj.owner == request.user
+
+class IsNotModerator(permissions.BasePermission):
+    """
+    Разрешение для обычных пользователей (НЕ модераторов).
+    Модераторы НЕ могут создавать новые объекты.
+    """
+    def has_permission(self, request, view):
+        if request.user.groups.filter(name='Модераторы').exists():
+            return False
+        return True

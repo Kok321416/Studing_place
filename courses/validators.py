@@ -8,8 +8,8 @@ def validate_youtube_url(value):
     Валидатор для проверки, что ссылка ведет только на YouTube.
     Разрешены только ссылки на youtube.com и youtu.be домены.
     """
-    if not value:
-        return  # Пустые значения пропускаем (если поле не обязательное)
+    if not value or not value.strip():
+        return  # Пустые значения и значения только с пробелами пропускаем
     
     try:
         # Парсим URL

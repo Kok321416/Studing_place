@@ -59,15 +59,17 @@ class YouTubeValidatorTest(TestCase):
                     validate_youtube_url(url)
     
     def test_empty_url(self):
-        """Тест пустых значений"""
+        """Тест пустых значений - должны пропускаться без ошибок"""
         empty_values = [None, '', '   ']
         
         for value in empty_values:
             with self.subTest(value=repr(value)):
                 try:
-                    validate_youtube_url(value)
+                    result = validate_youtube_url(value)
+                    # Пустые значения должны возвращать None (пропускаются)
+                    self.assertIsNone(result, f"Пустое значение должно возвращать None: {repr(value)}")
                 except ValidationError:
-                    self.fail(f"Пустое значение должно быть разрешено: {repr(value)}")
+                    self.fail(f"Пустое значение должно быть пропущено без ошибки: {repr(value)}")
     
     def test_class_validator(self):
         """Тест класса-валидатора"""

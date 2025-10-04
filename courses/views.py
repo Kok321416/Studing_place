@@ -9,7 +9,7 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .models import Course, Lesson, Subscription
 from .serializers import CourseSerializer, LessonSerializer
-from .permissions import IsModeratorOrOwnerForModify, IsOwner, IsModeratorOrOwner, IsModerator
+from .permissions import IsModeratorOrOwnerForModify, IsOwner, IsModeratorOrOwner, IsModerator, IsNotModerator
 from .paginators import CoursesPagination, LessonsPagination
 
 # Create your views here.
@@ -54,7 +54,7 @@ class CourseViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated, IsOwner]
         elif self.action == 'create':
             # Только обычные пользователи могут создавать (модераторы НЕ могут)
-            permission_classes = [IsAuthenticated, ~IsModerator]
+            permission_classes = [IsAuthenticated, IsNotModerator]
         elif self.action in ['list', 'retrieve']:
             # Все авторизованные могут просматривать
             permission_classes = [IsAuthenticated]
@@ -159,7 +159,7 @@ class LessonListCreateView(ListCreateAPIView):
         """Динамически назначаем разрешения в зависимости от действия"""
         if self.request.method == 'POST':
             # Только обычные пользователи могут создавать (модераторы НЕ могут)
-            permission_classes = [IsAuthenticated, ~IsModerator]
+            permission_classes = [IsAuthenticated, IsNotModerator]
         else:
             # Все авторизованные могут просматривать список
             permission_classes = [IsAuthenticated]
