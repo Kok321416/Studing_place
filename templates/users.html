@@ -1,267 +1,62 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Пользователи - Studing Place{% endblock %}
 
 {% block content %}
-<div class="hero-section">
-    <h1 class="hero-title">
-        <i class="fas fa-users"></i> Пользователи
-    </h1>
-    <p class="hero-subtitle">Управление пользователями, авторизация и система прав доступа</p>
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="/api/users/" class="btn">
-            <i class="fas fa-code"></i> API Пользователей
-        </a>
-        <a href="/admin/" class="btn btn-secondary">
-            <i class="fas fa-cog"></i> Админка
-        </a>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-info-circle"></i> О системе пользователей
-    </h2>
-    <p class="card-content">
-        Наша платформа использует современную систему аутентификации с JWT-токенами. 
-        Каждый пользователь имеет уникальные права доступа в зависимости от роли и владения контентом.
-    </p>
-</div>
-
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-code"></i> API Endpoints для пользователей
-    </h2>
-    <p class="card-content">
-        Полный набор API для работы с пользователями, включая регистрацию, авторизацию и управление профилями.
-    </p>
-    
-    <div class="api-endpoint">
-        <span class="method post">POST</span>
-        <strong>/api/users/register/</strong> - Регистрация нового пользователя
-        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
-            Создает новый аккаунт пользователя (доступно для неавторизованных пользователей)
-        </div>
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method post">POST</span>
-        <strong>/api/users/login/</strong> - Авторизация пользователя
-        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
-            Возвращает JWT-токен для доступа к защищенным эндпоинтам
-        </div>
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method get">GET</span>
-        <strong>/api/users/profile/</strong> - Профиль текущего пользователя
-        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
-            Возвращает информацию о текущем авторизованном пользователе
-        </div>
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method put">PUT</span>
-        <strong>/api/users/profile/</strong> - Обновление профиля
-        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
-            Обновляет информацию профиля текущего пользователя
-        </div>
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method get">GET</span>
-        <strong>/api/users/payments/</strong> - История платежей
-        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
-            Возвращает историю платежей пользователя (требует авторизации)
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-database"></i> Структура данных пользователя
-    </h2>
-    <div class="api-endpoint">
-        <strong>Модель User:</strong>
-        <ul style="margin: 1rem 0; padding-left: 2rem;">
-            <li><strong>email</strong> - Email пользователя (EmailField, уникальный)</li>
-            <li><strong>phone</strong> - Телефон (CharField, max_length=15)</li>
-            <li><strong>city</strong> - Город (CharField, max_length=100)</li>
-            <li><strong>avatar</strong> - Аватарка (ImageField, опционально)</li>
-            <li><strong>is_staff</strong> - Статус персонала (BooleanField)</li>
-            <li><strong>is_superuser</strong> - Статус суперпользователя (BooleanField)</li>
-        </ul>
-    </div>
-</div>
-
-<div class="grid">
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-shield-alt"></i>
-        </div>
-        <h3>JWT Авторизация</h3>
-        <p>Современная система токенов для безопасной аутентификации</p>
-        <div class="api-endpoint" style="margin-top: 1rem;">
-            <span class="method post">POST</span>
-            <strong>/api/users/login/</strong> - Получить токен
-        </div>
-    </div>
-
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-user-plus"></i>
-        </div>
-        <h3>Регистрация</h3>
-        <p>Простая регистрация с валидацией данных</p>
-        <div class="api-endpoint" style="margin-top: 1rem;">
-            <span class="method post">POST</span>
-            <strong>/api/users/register/</strong> - Создать аккаунт
-        </div>
-    </div>
-
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-credit-card"></i>
-        </div>
-        <h3>Платежи</h3>
-        <p>Отслеживание истории платежей и подписок</p>
-        <div class="api-endpoint" style="margin-top: 1rem;">
-            <span class="method get">GET</span>
-            <strong>/api/users/payments/</strong> - История платежей
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-users-cog"></i> Роли и права доступа
-    </h2>
-    <p class="card-content">
-        Система ролей обеспечивает безопасность и контроль над различными функциями платформы.
-    </p>
-    
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-top: 1rem;">
-        <div style="background: var(--gray-100); padding: 1rem; border-radius: 10px; border-left: 4px solid #10B981;">
-            <h4 style="color: #10B981; margin-bottom: 0.5rem;">
-                <i class="fas fa-user"></i> Обычный пользователь
-            </h4>
-            <p style="font-size: 0.9rem;">Просмотр курсов и уроков, создание собственного контента</p>
-        </div>
-        
-        <div style="background: var(--gray-100); padding: 1rem; border-radius: 10px; border-left: 4px solid #3B82F6;">
-            <h4 style="color: #3B82F6; margin-bottom: 0.5rem;">
-                <i class="fas fa-user-shield"></i> Модератор
-            </h4>
-            <p style="font-size: 0.9rem;">Редактирование любого контента, но без создания и удаления</p>
-        </div>
-        
-        <div style="background: var(--gray-100); padding: 1rem; border-radius: 10px; border-left: 4px solid #F59E0B;">
-            <h4 style="color: #F59E0B; margin-bottom: 0.5rem;">
-                <i class="fas fa-user-tie"></i> Персонал
-            </h4>
-            <p style="font-size: 0.9rem;">Доступ к админ-панели с ограниченными правами</p>
-        </div>
-        
-        <div style="background: var(--gray-100); padding: 1rem; border-radius: 10px; border-left: 4px solid #EF4444;">
-            <h4 style="color: #EF4444; margin-bottom: 0.5rem;">
-                <i class="fas fa-crown"></i> Суперпользователь
-            </h4>
-            <p style="font-size: 0.9rem;">Полный доступ ко всем функциям платформы</p>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-lock"></i> Безопасность и валидация
-    </h2>
-    <p class="card-content">
-        Система безопасности включает в себя валидацию данных, хеширование паролей и защиту от атак.
-    </p>
-    
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-top: 1rem;">
-        <div style="text-align: center; padding: 1rem;">
-            <div style="font-size: 2rem; color: var(--primary-purple); margin-bottom: 0.5rem;">
-                <i class="fas fa-key"></i>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- Заголовок страницы -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="text-gradient mb-2">
+                    <i class="fas fa-users me-3"></i>
+                    Пользователи
+                </h1>
+                <p class="text-muted mb-0">Список пользователей - участники образовательной платформы</p>
             </div>
-            <div style="color: var(--gray-800); font-weight: 600;">Хеширование паролей</div>
-            <div style="font-size: 0.8rem; color: var(--gray-800);">bcrypt алгоритм</div>
+            {% if user.is_authenticated %}
+                <a href="/api/users/" class="btn btn-outline-primary">
+                    <i class="fas fa-code me-2"></i>
+                    API View
+                </a>
+            {% endif %}
         </div>
-        
-        <div style="text-align: center; padding: 1rem;">
-            <div style="font-size: 2rem; color: var(--primary-purple); margin-bottom: 0.5rem;">
-                <i class="fas fa-clock"></i>
-            </div>
-            <div style="color: var(--gray-800); font-weight: 600;">JWT токены</div>
-            <div style="font-size: 0.8rem; color: var(--gray-800);">Время жизни: 24ч</div>
-        </div>
-        
-        <div style="text-align: center; padding: 1rem;">
-            <div style="font-size: 2rem; color: var(--primary-purple); margin-bottom: 0.5rem;">
-                <i class="fas fa-shield-virus"></i>
-            </div>
-            <div style="color: var(--gray-800); font-weight: 600;">CSRF защита</div>
-            <div style="font-size: 0.8rem; color: var(--gray-800);">Автоматическая валидация</div>
-        </div>
-        
-        <div style="text-align: center; padding: 1rem;">
-            <div style="font-size: 2rem; color: var(--primary-purple); margin-bottom: 0.5rem;">
-                <i class="fas fa-user-check"></i>
-            </div>
-            <div style="color: var(--gray-800); font-weight: 600;">Валидация данных</div>
-            <div style="font-size: 0.8rem; color: var(--gray-800);">Email, телефон, город</div>
-        </div>
-    </div>
-</div>
 
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-credit-card"></i> Система платежей
-    </h2>
-    <p class="card-content">
-        Интегрированная система для отслеживания платежей за курсы и уроки.
-    </p>
-    
-    <div class="api-endpoint">
-        <strong>Модель Payment:</strong>
-        <ul style="margin: 1rem 0; padding-left: 2rem;">
-            <li><strong>user</strong> - Пользователь (ForeignKey)</li>
-            <li><strong>payment_date</strong> - Дата платежа (DateTimeField)</li>
-            <li><strong>course</strong> - Курс (ForeignKey, опционально)</li>
-            <li><strong>lesson</strong> - Урок (ForeignKey, опционально)</li>
-            <li><strong>amount</strong> - Сумма (DecimalField)</li>
-            <li><strong>payment_method</strong> - Способ оплаты (ChoiceField)</li>
-        </ul>
-    </div>
-    
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
-        <a href="/api/users/payments/" class="btn">
-            <i class="fas fa-credit-card"></i> API Платежей
-        </a>
-        <a href="/admin/" class="btn btn-secondary">
-            <i class="fas fa-cog"></i> Управление в админке
-        </a>
-    </div>
-</div>
+        <!-- Информация о пользователях -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Информация о пользователях
+                </h5>
+                <p class="card-text text-muted">
+                    На этой странице отображается список всех зарегистрированных пользователей платформы.
+                    Вы можете просматривать профили других участников и взаимодействовать с ними.
+                </p>
+            </div>
+        </div>
 
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-rocket"></i> Быстрый старт с пользователями
-    </h2>
-    <p class="card-content">
-        Начните работу с API пользователей прямо сейчас. Создайте аккаунт и получите доступ ко всем функциям.
-    </p>
-    
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
-        <a href="/api/users/register/" class="btn">
-            <i class="fas fa-user-plus"></i> Регистрация
-        </a>
-        <a href="/api/users/login/" class="btn btn-secondary">
-            <i class="fas fa-sign-in-alt"></i> Авторизация
-        </a>
-        <a href="/courses/" class="btn btn-secondary">
-            <i class="fas fa-book"></i> Перейти к курсам
-        </a>
+        <!-- Пустое состояние -->
+        <div class="empty-state">
+            <div class="text-center py-5">
+                <i class="fas fa-users fa-4x text-muted mb-4"></i>
+                <h3 class="text-muted mb-3">Пользователи не найдены</h3>
+                <p class="text-muted mb-4">
+                    {% if user.is_authenticated %}
+                        В данный момент нет других пользователей на платформе.
+                    {% else %}
+                        Зарегистрируйтесь, чтобы стать частью сообщества!
+                    {% endif %}
+                </p>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'user-registration' %}" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Зарегистрироваться
+                    </a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
