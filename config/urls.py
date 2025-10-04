@@ -49,6 +49,10 @@ urlpatterns = [
     path("lessons/", lesson_list_view, name='lesson_list'),  # HTML страница уроков
     path("users/", user_list_view, name='user_list'),  # HTML страница пользователей
     
+    # Auth pages
+    path("login/", lambda request: render(request, 'login.html'), name='login'),
+    path("logout/", lambda request: render(request, 'logout.html'), name='logout'),
+    
     # Admin and API
     path("admin/", admin.site.urls),
     
