@@ -143,6 +143,9 @@ class CourseViewSet(viewsets.ModelViewSet):
         """Фильтруем queryset в зависимости от роли пользователя"""
         if self.request.user.groups.filter(name='Модераторы').exists():
             return Course.objects.all()
+        # Для операций удаления показываем все курсы, чтобы проверить разрешения
+        if self.action == 'destroy':
+            return Course.objects.all()
         return Course.objects.filter(owner=self.request.user)
 
 class LessonListCreateView(ListCreateAPIView):
