@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсы - Studing Place{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <h1 class="hero-title">
+        <i class="fas fa-book-open"></i> Наши курсы
+    </h1>
+    <p class="hero-subtitle">Выберите интересующий вас курс и начните обучение уже сегодня</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="/api/courses/" class="btn">
+            <i class="fas fa-code"></i> API Курсов
+        </a>
+        <a href="/" class="btn btn-secondary">
+            <i class="fas fa-home"></i> На главную
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">
+        <i class="fas fa-info-circle"></i> О курсах
+    </h2>
+    <p class="card-content">
+        Наши курсы разработаны опытными преподавателями и содержат актуальную информацию по современным технологиям. 
+        Каждый курс включает в себя теоретические материалы, практические задания и видео-уроки.
+    </p>
+</div>
+
+<div class="card">
+    <h2 class="card-title">
+        <i class="fas fa-code"></i> API Endpoints для курсов
+    </h2>
+    <p class="card-content">
+        Полный набор API для работы с курсами через RESTful интерфейс.
+    </p>
+    
+    <div class="api-endpoint">
+        <span class="method get">GET</span>
+        <strong>/api/courses/</strong> - Получить список всех курсов
+        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
+            Возвращает пагинированный список курсов с информацией о названии, описании и количестве уроков
+        </div>
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method post">POST</span>
+        <strong>/api/courses/</strong> - Создать новый курс
+        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
+            Создает новый курс (требует авторизации и соответствующих прав)
+        </div>
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method get">GET</span>
+        <strong>/api/courses/{id}/</strong> - Получить детали курса
+        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
+            Возвращает полную информацию о курсе, включая список уроков
+        </div>
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method put">PUT</span>
+        <strong>/api/courses/{id}/</strong> - Обновить курс
+        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
+            Обновляет информацию о курсе (требует авторизации и соответствующих прав)
+        </div>
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method delete">DELETE</span>
+        <strong>/api/courses/{id}/</strong> - Удалить курс
+        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--gray-800);">
+            Удаляет курс (требует авторизации и соответствующих прав)
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">
+        <i class="fas fa-database"></i> Структура данных курса
+    </h2>
+    <div class="api-endpoint">
+        <strong>Модель Course:</strong>
+        <ul style="margin: 1rem 0; padding-left: 2rem;">
+            <li><strong>title</strong> - Название курса (CharField, max_length=100)</li>
+            <li><strong>preview</strong> - Превью курса (ImageField)</li>
+            <li><strong>description</strong> - Описание курса (TextField)</li>
+            <li><strong>lessons_count</strong> - Количество уроков (вычисляемое поле)</li>
+            <li><strong>lessons</strong> - Список уроков курса (связанные объекты)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <h3>Поиск курсов</h3>
+        <p>Используйте API для поиска курсов по различным критериям</p>
+        <div class="api-endpoint" style="margin-top: 1rem;">
+            <span class="method get">GET</span>
+            <strong>/api/courses/?search=название</strong>
+        </div>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-filter"></i>
+        </div>
+        <h3>Фильтрация</h3>
+        <p>Фильтруйте курсы по различным параметрам</p>
+        <div class="api-endpoint" style="margin-top: 1rem;">
+            <span class="method get">GET</span>
+            <strong>/api/courses/?ordering=title</strong>
+        </div>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-pagelines"></i>
+        </div>
+        <h3>Пагинация</h3>
+        <p>Получайте курсы постранично для оптимизации</p>
+        <div class="api-endpoint" style="margin-top: 1rem;">
+            <span class="method get">GET</span>
+            <strong>/api/courses/?page=1</strong>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">
+        <i class="fas fa-shield-alt"></i> Права доступа
+    </h2>
+    <p class="card-content">
+        Система прав доступа обеспечивает безопасность и контроль над данными курсов.
+    </p>
+    
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-top: 1rem;">
+        <div style="background: var(--gray-100); padding: 1rem; border-radius: 10px; border-left: 4px solid #10B981;">
+            <h4 style="color: #10B981; margin-bottom: 0.5rem;">
+                <i class="fas fa-eye"></i> Просмотр
+            </h4>
+            <p style="font-size: 0.9rem;">Все пользователи могут просматривать курсы</p>
+        </div>
+        
+        <div style="background: var(--gray-100); padding: 1rem; border-radius: 10px; border-left: 4px solid #3B82F6;">
+            <h4 style="color: #3B82F6; margin-bottom: 0.5rem;">
+                <i class="fas fa-edit"></i> Редактирование
+            </h4>
+            <p style="font-size: 0.9rem;">Владельцы курсов и модераторы</p>
+        </div>
+        
+        <div style="background: var(--gray-100); padding: 1rem; border-radius: 10px; border-left: 4px solid #F59E0B;">
+            <h4 style="color: #F59E0B; margin-bottom: 0.5rem;">
+                <i class="fas fa-plus"></i> Создание
+            </h4>
+            <p style="font-size: 0.9rem;">Авторизованные пользователи</p>
+        </div>
+        
+        <div style="background: var(--gray-100); padding: 1rem; border-radius: 10px; border-left: 4px solid #EF4444;">
+            <h4 style="color: #EF4444; margin-bottom: 0.5rem;">
+                <i class="fas fa-trash"></i> Удаление
+            </h4>
+            <p style="font-size: 0.9rem;">Только владельцы курсов</p>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">
+        <i class="fas fa-rocket"></i> Быстрый старт
+    </h2>
+    <p class="card-content">
+        Начните работу с API курсов прямо сейчас. Используйте Postman или любой другой HTTP-клиент.
+    </p>
+    
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+        <a href="/api/courses/" class="btn">
+            <i class="fas fa-play"></i> Тестировать API
+        </a>
+        <a href="/lessons/" class="btn btn-secondary">
+            <i class="fas fa-play-circle"></i> Перейти к урокам
+        </a>
+        <a href="/users/" class="btn btn-secondary">
+            <i class="fas fa-users"></i> Управление пользователями
+        </a>
+    </div>
+</div>
+{% endblock %}

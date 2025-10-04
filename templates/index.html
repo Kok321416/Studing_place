@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Studing Place - Главная{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <h1 class="hero-title">Добро пожаловать в Studing Place</h1>
+    <p class="hero-subtitle">Современная платформа для онлайн-обучения с инновационными технологиями</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="/courses/" class="btn">
+            <i class="fas fa-rocket"></i> Начать обучение
+        </a>
+        <a href="/users/" class="btn btn-secondary">
+            <i class="fas fa-user-plus"></i> Регистрация
+        </a>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-book-open"></i>
+        </div>
+        <h3>Курсы</h3>
+        <p>Доступ к качественным образовательным материалам по различным направлениям</p>
+        <a href="/courses/" class="btn" style="margin-top: 1rem; font-size: 0.9rem;">
+            <i class="fas fa-arrow-right"></i> Перейти к курсам
+        </a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-play-circle"></i>
+        </div>
+        <h3>Уроки</h3>
+        <p>Интерактивные уроки с видео-материалами и практическими заданиями</p>
+        <a href="/lessons/" class="btn" style="margin-top: 1rem; font-size: 0.9rem;">
+            <i class="fas fa-arrow-right"></i> Перейти к урокам
+        </a>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-users"></i>
+        </div>
+        <h3>Сообщество</h3>
+        <p>Присоединяйтесь к сообществу учащихся и преподавателей</p>
+        <a href="/users/" class="btn" style="margin-top: 1rem; font-size: 0.9rem;">
+            <i class="fas fa-arrow-right"></i> Присоединиться
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">
+        <i class="fas fa-code"></i> API Endpoints
+    </h2>
+    <p class="card-content">
+        Наша платформа предоставляет RESTful API для интеграции с внешними системами и создания мобильных приложений.
+    </p>
+    
+    <div class="api-endpoint">
+        <span class="method get">GET</span>
+        <strong>/api/courses/</strong> - Список всех курсов
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method post">POST</span>
+        <strong>/api/courses/</strong> - Создание нового курса
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method get">GET</span>
+        <strong>/api/courses/{id}/</strong> - Детали курса
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method put">PUT</span>
+        <strong>/api/courses/{id}/</strong> - Обновление курса
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method delete">DELETE</span>
+        <strong>/api/courses/{id}/</strong> - Удаление курса
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method get">GET</span>
+        <strong>/api/courses/lessons/</strong> - Список всех уроков
+    </div>
+    
+    <div class="api-endpoint">
+        <span class="method get">GET</span>
+        <strong>/api/users/</strong> - Список пользователей (требует авторизации)
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">
+        <i class="fas fa-shield-alt"></i> Безопасность и авторизация
+    </h2>
+    <p class="card-content">
+        Платформа использует современные стандарты безопасности и JWT-токены для авторизации пользователей.
+    </p>
+    
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+        <a href="/admin/" class="btn">
+            <i class="fas fa-cog"></i> Административная панель
+        </a>
+        <a href="/api/" class="btn btn-secondary">
+            <i class="fas fa-code"></i> API Документация
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-title">
+        <i class="fas fa-chart-line"></i> Статистика платформы
+    </h2>
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div style="text-align: center; padding: 1rem;">
+            <div style="font-size: 2.5rem; color: var(--primary-purple); font-weight: bold;">∞</div>
+            <div style="color: var(--gray-800);">Курсов</div>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+            <div style="font-size: 2.5rem; color: var(--primary-purple); font-weight: bold;">∞</div>
+            <div style="color: var(--gray-800);">Уроков</div>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+            <div style="font-size: 2.5rem; color: var(--primary-purple); font-weight: bold;">∞</div>
+            <div style="color: var(--gray-800);">Пользователей</div>
+        </div>
+        <div style="text-align: center; padding: 1rem;">
+            <div style="font-size: 2.5rem; color: var(--primary-purple); font-weight: bold;">24/7</div>
+            <div style="color: var(--gray-800);">Доступность</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

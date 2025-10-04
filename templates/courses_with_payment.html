@@ -1,0 +1,348 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсы с оплатой - Studing Place{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <h1 class="hero-title">
+        <i class="fas fa-book-open"></i> Наши курсы
+    </h1>
+    <p class="hero-subtitle">Выберите интересующий вас курс и начните обучение уже сегодня</p>
+</div>
+
+<div id="courses-container">
+    <!-- Курсы будут загружены через JavaScript -->
+    <div class="loading-courses">
+        <div class="loading"></div>
+        <p>Загрузка курсов...</p>
+    </div>
+</div>
+
+<style>
+.course-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-blue);
+    box-shadow: var(--shadow-hover);
+}
+
+.course-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.course-title {
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    flex: 1;
+}
+
+.course-price {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--cyan-blue) 100%);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-left: 1rem;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.course-description {
+    color: var(--gray-800);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.course-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--light-blue);
+    border-radius: 15px;
+}
+
+.course-lessons {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.course-owner {
+    color: var(--gray-800);
+    font-size: 0.9rem;
+}
+
+.payment-section {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-pay {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-pay:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    color: var(--white);
+}
+
+.btn-pay:disabled {
+    background: var(--gray-200);
+    color: var(--gray-800);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-free {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--cyan-blue) 100%);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-free:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    color: var(--white);
+}
+
+.payment-status {
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.status-paid {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: #F59E0B;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.loading-courses {
+    text-align: center;
+    padding: 3rem;
+    color: var(--gray-800);
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+    padding: 1rem;
+    border-radius: 15px;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    margin: 1rem 0;
+}
+
+.no-courses {
+    text-align: center;
+    padding: 3rem;
+    color: var(--gray-800);
+}
+
+.no-courses i {
+    font-size: 4rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .course-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .course-price {
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+    
+    .course-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .payment-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-pay, .btn-free {
+        justify-content: center;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadCourses();
+});
+
+async function loadCourses() {
+    try {
+        const response = await fetch('/api/courses/');
+        const data = await response.json();
+        
+        if (response.ok) {
+            displayCourses(data.results || data);
+        } else {
+            showError('Ошибка загрузки курсов: ' + (data.detail || 'Неизвестная ошибка'));
+        }
+    } catch (error) {
+        showError('Ошибка сети: ' + error.message);
+    }
+}
+
+function displayCourses(courses) {
+    const container = document.getElementById('courses-container');
+    
+    if (courses.length === 0) {
+        container.innerHTML = `
+            <div class="no-courses">
+                <i class="fas fa-book-open"></i>
+                <h3>Курсы не найдены</h3>
+                <p>Пока нет доступных курсов. Попробуйте позже.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = courses.map(course => `
+        <div class="course-card">
+            <div class="course-header">
+                <h2 class="course-title">${course.title}</h2>
+                ${course.price ? `<div class="course-price">${course.price} ₽</div>` : ''}
+            </div>
+            
+            <p class="course-description">${course.description}</p>
+            
+            <div class="course-meta">
+                <div class="course-lessons">
+                    <i class="fas fa-play-circle"></i> ${course.lessons_count || 0} уроков
+                </div>
+                <div class="course-owner">
+                    <i class="fas fa-user"></i> ${course.owner ? course.owner.email : 'Система'}
+                </div>
+            </div>
+            
+            <div class="payment-section">
+                ${course.price ? `
+                    <button class="btn-pay" onclick="initiatePayment(${course.id}, 'course', ${course.price})">
+                        <i class="fas fa-credit-card"></i>
+                        Оплатить курс
+                    </button>
+                ` : `
+                    <a href="/api/courses/${course.id}/" class="btn-free">
+                        <i class="fas fa-play"></i>
+                        Начать обучение
+                    </a>
+                `}
+                
+                <a href="/api/courses/${course.id}/" class="btn btn-secondary">
+                    <i class="fas fa-info-circle"></i>
+                    Подробнее
+                </a>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function initiatePayment(courseId, type, amount) {
+    try {
+        // Получаем токен из localStorage или запрашиваем авторизацию
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            alert('Необходимо авторизоваться для оплаты');
+            window.location.href = '/admin/';
+            return;
+        }
+        
+        const response = await fetch('/api/users/payments/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                course_id: courseId,
+                amount: amount,
+                payment_method: 'stripe'
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.payment_url) {
+            // Перенаправляем на страницу оплаты Stripe
+            window.location.href = data.payment_url;
+        } else {
+            alert('Ошибка создания платежа: ' + (data.error || 'Неизвестная ошибка'));
+        }
+    } catch (error) {
+        alert('Ошибка: ' + error.message);
+    }
+}
+
+function showError(message) {
+    const container = document.getElementById('courses-container');
+    container.innerHTML = `
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            ${message}
+        </div>
+    `;
+}
+</script>
+{% endblock %}
