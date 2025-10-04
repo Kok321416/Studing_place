@@ -1,59 +1,62 @@
-version: '3.8'
-
 services:
-  db:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: django_lms
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   web:
     build: .
-    command: >
-      sh -c "python manage.py migrate &&
-             python manage.py collectstatic --noinput &&
-             gunicorn --bind 0.0.0.0:8000 --workers 3 config.wsgi:application"
+    command: sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn config.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
       - media_volume:/app/media
-    ports:
-      - "8000:8000"
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=${DEBUG}
-      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=db
-      - DB_PORT=5432
+    expose:
+      - "8000"
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
+    env_file:
+      - ./.env
 
   nginx:
-    image: nginx:alpine
+    build:
+      context: ./nginx
     ports:
       - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - static_volume:/app/staticfiles
       - media_volume:/app/media
     depends_on:
       - web
 
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DB_NAME:-django_lms}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - ./.env
+
+  redis:
+    image: redis:7
+    volumes:
+      - redis_volume:/data
+    ports:
+      - "6379:6379"
+    env_file:
+      - ./.env
+
 volumes:
   postgres_data:
   static_volume:
   media_volume:
+  redis_volume:
