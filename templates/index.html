@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}Studing Place - Главная{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="hero-title floating">
+                    <i class="fas fa-graduation-cap text-gradient me-3"></i>
+                    Studing Place
+                </h1>
+                <p class="hero-subtitle">
+                    Современная платформа для изучения программирования и веб-разработки
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="/courses/html/" class="btn btn-primary btn-lg pulse">
+                        <i class="fas fa-rocket me-2"></i>Начать обучение
+                    </a>
+                    <a href="/api/users/register/" class="btn btn-accent btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Зарегистрироваться
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Возможности платформы -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center text-white mb-5">
+                <i class="fas fa-star text-gradient me-2"></i>
+                Возможности платформы
+            </h2>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h4>Курсы</h4>
+                <p>Изучайте программирование по структурированным курсам с практическими заданиями</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h4>Уроки</h4>
+                <p>Интерактивные уроки с видео-материалами и практическими примерами</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h4>API</h4>
+                <p>Мощный REST API для интеграции с другими приложениями и сервисами</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h4>Безопасность</h4>
+                <p>JWT аутентификация и система разрешений для защиты ваших данных</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h4>Сообщество</h4>
+                <p>Присоединяйтесь к сообществу разработчиков и делитесь опытом</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h4>Адаптивность</h4>
+                <p>Изучайте на любом устройстве - компьютер, планшет или телефон</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Информация -->
+    <div class="api-section">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">
+                    <i class="fas fa-code text-gradient me-2"></i>
+                    REST API для разработчиков
+                </h3>
+                <p class="mb-4">
+                    Наша платформа предоставляет мощный REST API для работы с курсами, уроками и пользователями. 
+                    Поддерживается JWT аутентификация, фильтрация, сортировка и пагинация данных.
+                </p>
+                <div class="d-flex gap-2 flex-wrap">
+                    <span class="badge bg-light text-dark px-3 py-2">Django REST Framework</span>
+                    <span class="badge bg-light text-dark px-3 py-2">JWT Authentication</span>
+                    <span class="badge bg-light text-dark px-3 py-2">PostgreSQL</span>
+                    <span class="badge bg-light text-dark px-3 py-2">Docker Ready</span>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="floating">
+                    <i class="fas fa-server" style="font-size: 4rem; color: rgba(255,255,255,0.7);"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Призыв к действию -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <div class="glass-effect p-5 rounded-4">
+                <h3 class="text-white mb-3">
+                    <i class="fas fa-rocket text-gradient me-2"></i>
+                    Готовы начать обучение?
+                </h3>
+                <p class="text-white-50 mb-4">
+                    Присоединяйтесь к тысячам разработчиков, которые уже изучают программирование на нашей платформе
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="/courses/html/" class="btn btn-primary btn-lg">
+                        <i class="fas fa-play me-2"></i>Посмотреть курсы
+                    </a>
+                    <a href="/api/users/register/" class="btn btn-accent btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Создать аккаунт
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block title %}Уроки - Studing Place{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-section py-5">
+                <h1 class="text-center text-white mb-4">
+                    <i class="fas fa-play-circle text-gradient me-3"></i>
+                    Наши уроки
+                </h1>
+                <p class="text-center text-white-50 mb-4">
+                    Интерактивные уроки с практическими примерами и заданиями
+                </p>
+                <div class="text-center">
+                    <a href="/api/users/register/" class="btn btn-accent btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Зарегистрироваться
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if lessons %}
+    <div class="row">
+        {% for lesson in lessons %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    {% if lesson.preview %}
+                    <div class="text-center mb-3">
+                        <img src="{{ lesson.preview.url }}" alt="{{ lesson.title }}" 
+                             class="img-fluid rounded" style="max-height: 200px; width: 100%; object-fit: cover;">
+                    </div>
+                    {% else %}
+                    <div class="text-center mb-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-center" 
+                             style="height: 200px; background: var(--gradient-purple);">
+                            <i class="fas fa-play-circle text-white" style="font-size: 3rem;"></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <h5 class="card-title text-center mb-3">{{ lesson.title }}</h5>
+                    
+                    {% if lesson.course %}
+                    <div class="text-center mb-3">
+                        <span class="badge bg-primary">
+                            <i class="fas fa-book me-1"></i>{{ lesson.course.title }}
+                        </span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mt-auto">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                {{ lesson.created_at|date:"d.m.Y" }}
+                            </small>
+                            <small class="text-muted">
+                                <i class="fas fa-user me-1"></i>
+                                {% if lesson.owner %}
+                                    {{ lesson.owner.first_name|default:lesson.owner.email }}
+                                {% else %}
+                                    Система
+                                {% endif %}
+                            </small>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <a href="/api/lessons/{{ lesson.id }}/" class="btn btn-primary flex-fill">
+                                <i class="fas fa-play me-1"></i>Смотреть
+                            </a>
+                            <a href="/api/lessons/{{ lesson.id }}/" class="btn btn-outline-primary flex-fill">
+                                <i class="fas fa-edit me-1"></i>Редактировать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center mt-5">
+        <div class="glass-effect p-4 rounded-4 d-inline-block">
+            <h4 class="text-white mb-3">
+                <i class="fas fa-chart-bar text-gradient me-2"></i>
+                Статистика уроков
+            </h4>
+            <div class="row text-center">
+                <div class="col-4">
+                    <h3 class="text-gradient">{{ lessons_count }}</h3>
+                    <small class="text-white-50">Всего уроков</small>
+                </div>
+                <div class="col-4">
+                    <h3 class="text-gradient">{{ lessons_count }}</h3>
+                    <small class="text-white-50">Доступных</small>
+                </div>
+                <div class="col-4">
+                    <h3 class="text-gradient">∞</h3>
+                    <small class="text-white-50">Знаний</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% else %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card text-center">
+                <div class="card-body py-5">
+                    <i class="fas fa-play-circle text-gradient mb-3" style="font-size: 4rem;"></i>
+                    <h3 class="mb-3">Уроки пока не добавлены</h3>
+                    <p class="text-muted mb-4">
+                        Мы готовим для вас увлекательные уроки с практическими заданиями. 
+                        Скоро здесь появится много интересного контента!
+                    </p>
+                    <a href="/api/users/register/" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-2"></i>Зарегистрироваться
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- API Информация -->
+    <div class="api-section mt-5">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">
+                    <i class="fas fa-code text-gradient me-2"></i>
+                    API для уроков
+                </h3>
+                <p class="mb-4">
+                    Используйте наш REST API для работы с уроками: просмотр, создание, редактирование и удаление.
+                </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-white-50">Доступные эндпоинты:</h6>
+                        <ul class="list-unstyled">
+                            <li><code class="text-white-50">GET /api/lessons/</code> - список уроков</li>
+                            <li><code class="text-white-50">POST /api/lessons/</code> - создать урок</li>
+                            <li><code class="text-white-50">GET /api/lessons/{id}/</code> - детали урока</li>
+                            <li><code class="text-white-50">PUT /api/lessons/{id}/</code> - обновить урок</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-white-50">Особенности:</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Связь с курсами</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Медиа файлы</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Права доступа</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Фильтрация</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="floating">
+                    <i class="fas fa-video" style="font-size: 4rem; color: rgba(255,255,255,0.7);"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
