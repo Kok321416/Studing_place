@@ -2,9 +2,9 @@ name: Deploy Django App
 
 on:
   push:
-    branches: [ main, develop, 32_2 ]
+    branches: [ main, develop, 32_2, develop_35.2 ]
   pull_request:
-    branches: [ develop ]
+    branches: [ develop, develop_35.2 ]
 
 jobs:
   test:
@@ -63,7 +63,7 @@ jobs:
   build-and-deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/32_2' && github.event_name == 'push'
+    if: (github.ref == 'refs/heads/32_2' || github.ref == 'refs/heads/develop_35.2') && github.event_name == 'push'
     
     steps:
     - uses: actions/checkout@v3
@@ -81,7 +81,17 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /var/www/studing_place
-          git pull origin 32_2
+          
+          # Определяем ветку для деплоя
+          if [ "${{ github.ref }}" = "refs/heads/32_2" ]; then
+            BRANCH="32_2"
+          elif [ "${{ github.ref }}" = "refs/heads/develop_35.2" ]; then
+            BRANCH="develop_35.2"
+          else
+            BRANCH="32_2"
+          fi
+          
+          git pull origin $BRANCH
           
           # Остановка старых контейнеров
           docker-compose down || true
