@@ -45,6 +45,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
+    - name: Run linting
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        black --check --diff .
+        
     - name: Run tests
       env:
         SECRET_KEY: test-secret-key-for-ci
@@ -68,10 +73,18 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Build Docker image
+    - name: Build Docker images
       run: |
+        # Сборка основного образа приложения
         docker build -t studing-place:${{ github.sha }} .
         docker tag studing-place:${{ github.sha }} studing-place:latest
+        
+        # Сборка образа nginx
+        docker build -t studing-place-nginx:${{ github.sha }} ./nginx
+        docker tag studing-place-nginx:${{ github.sha }} studing-place-nginx:latest
+        
+        # Проверка, что образы собрались успешно
+        docker images | grep studing-place
     
     - name: Deploy to server with Docker
       uses: appleboy/ssh-action@v0.1.5
