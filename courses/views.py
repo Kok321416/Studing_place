@@ -1,19 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, filters
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 from .models import Course, Lesson, Subscription
 from .serializers import CourseSerializer, LessonSerializer
 from .permissions import (
     IsModeratorOrOwnerForModify,
     IsOwner,
-    IsModeratorOrOwner,
-    IsModerator,
     IsNotModerator,
 )
 from .paginators import CoursesPagination, LessonsPagination
@@ -134,7 +134,11 @@ class CourseViewSet(viewsets.ModelViewSet):
     @swagger_auto_schema(
         operation_summary="Удалить курс",
         operation_description="Удаляет курс. Доступно только владельцу.",
-        responses={204: "Курс удален", 403: "Доступ запрещен", 404: "Курс не найден"},
+        responses={
+            204: "Курс удален",
+            403: "Доступ запрещен",
+            404: "Курс не найден",
+        },
     )
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)

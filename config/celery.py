@@ -1,6 +1,5 @@
 import os
 from celery import Celery
-from decouple import config
 
 # Устанавливаем переменную окружения для Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")

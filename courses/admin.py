@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, inlineformset_factory
+from django.forms import ModelForm
 from django.utils.html import format_html
 from .models import Course, Lesson, Subscription
 from .validators import validate_youtube_url
@@ -40,14 +40,23 @@ class LessonInline(admin.TabularInline):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ["title", "owner", "price_display", "lessons_count", "created_at"]
+    list_display = [
+        "title",
+        "owner",
+        "price_display",
+        "lessons_count",
+        "created_at",
+    ]
     list_filter = ["created_at", "owner", "price"]
     search_fields = ["title", "description"]
     readonly_fields = ["created_at", "updated_at"]
     inlines = [LessonInline]  # Добавляем inline для уроков
 
     fieldsets = (
-        ("Основная информация", {"fields": ("title", "description", "preview")}),
+        (
+            "Основная информация",
+            {"fields": ("title", "description", "preview")},
+        ),
         (
             "Цена и владелец",
             {
@@ -78,7 +87,8 @@ class CourseAdmin(admin.ModelAdmin):
         """Количество уроков в курсе"""
         count = obj.lessons.count()
         return format_html(
-            '<span style="color: #3B82F6; font-weight: bold;">{} уроков</span>', count
+            '<span style="color: #3B82F6; font-weight: bold;">{} уроков</span>',
+            count,
         )
 
     lessons_count.short_description = "Уроки"
@@ -93,13 +103,22 @@ class CourseAdmin(admin.ModelAdmin):
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
     form = LessonAdminForm
-    list_display = ["title", "course", "owner", "video_link_status", "created_at"]
+    list_display = [
+        "title",
+        "course",
+        "owner",
+        "video_link_status",
+        "created_at",
+    ]
     list_filter = ["course", "created_at", "owner"]
     search_fields = ["title", "description", "video_link"]
     readonly_fields = ["created_at", "updated_at"]
 
     fieldsets = (
-        ("Основная информация", {"fields": ("title", "description", "preview")}),
+        (
+            "Основная информация",
+            {"fields": ("title", "description", "preview")},
+        ),
         (
             "Видео",
             {

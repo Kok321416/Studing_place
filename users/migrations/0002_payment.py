@@ -31,13 +31,18 @@ class Migration(migrations.Migration):
                 (
                     "amount",
                     models.DecimalField(
-                        decimal_places=2, max_digits=10, verbose_name="Сумма оплаты"
+                        decimal_places=2,
+                        max_digits=10,
+                        verbose_name="Сумма оплаты",
                     ),
                 ),
                 (
                     "payment_method",
                     models.CharField(
-                        choices=[("cash", "Наличные"), ("transfer", "Перевод на счет")],
+                        choices=[
+                            ("cash", "Наличные"),
+                            ("transfer", "Перевод на счет"),
+                        ],
                         max_length=20,
                         verbose_name="Способ оплаты",
                     ),

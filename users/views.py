@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
-from .models import User, Payment
+from .models import Payment
 from .serializers import (
     UserRegistrationSerializer,
     UserProfileSerializer,
@@ -179,10 +179,12 @@ class PaymentViewSet(viewsets.ModelViewSet):
                     type=openapi.TYPE_OBJECT,
                     properties={
                         "status": openapi.Schema(
-                            type=openapi.TYPE_STRING, description="Статус платежа"
+                            type=openapi.TYPE_STRING,
+                            description="Статус платежа",
                         ),
                         "payment_status": openapi.Schema(
-                            type=openapi.TYPE_STRING, description="Статус в Stripe"
+                            type=openapi.TYPE_STRING,
+                            description="Статус в Stripe",
                         ),
                     },
                 ),

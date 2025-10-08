@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-import re
 from urllib.parse import urlparse
 
 
@@ -40,7 +39,8 @@ def validate_youtube_url(value):
         # Дополнительная проверка: URL должен быть HTTPS для безопасности
         if parsed_url.scheme != "https":
             raise ValidationError(
-                "Ссылка должна использовать HTTPS протокол.", code="insecure_url"
+                "Ссылка должна использовать HTTPS протокол.",
+                code="insecure_url",
             )
 
     except Exception as e:
@@ -67,7 +67,11 @@ class YouTubeURLValidator:
 
     def deconstruct(self):
         """Необходимо для миграций Django"""
-        return ("courses.validators.YouTubeURLValidator", (), {"field": self.field})
+        return (
+            "courses.validators.YouTubeURLValidator",
+            (),
+            {"field": self.field},
+        )
 
     def __fields__(self):
         """Возвращает список полей, которые валидирует данный валидатор"""

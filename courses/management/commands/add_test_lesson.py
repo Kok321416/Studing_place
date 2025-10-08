@@ -101,7 +101,7 @@ class Command(BaseCommand):
         self.stdout.write("=" * 50)
         self.stdout.write(f"API курса: http://localhost:8000/api/courses/{course.id}/")
         self.stdout.write(f"API урока: http://localhost:8000/api/lessons/{lesson.id}/")
-        self.stdout.write(f"Админка: http://localhost:8000/admin/")
+        self.stdout.write("Админка: http://localhost:8000/admin/")
         self.stdout.write(
-            f"Курсы с оплатой: http://localhost:8000/courses-with-payment/"
+            "Курсы с оплатой: http://localhost:8000/courses-with-payment/"
         )

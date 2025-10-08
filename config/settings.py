@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import sys
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -146,8 +147,6 @@ DATABASES = {
 }
 
 # Use SQLite for testing if running tests
-import sys
-
 if "test" in sys.argv or "test_coverage" in sys.argv:
     DATABASES = {
         "default": {
@@ -224,7 +223,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CSRF Settings
 CSRF_TRUSTED_ORIGINS = config(
-    "CSRF_TRUSTED_ORIGINS", default="http://localhost:8000,http://127.0.0.1:8000"
+    "CSRF_TRUSTED_ORIGINS",
+    default="http://localhost:8000,http://127.0.0.1:8000",
 ).split(",")
 
 # Stripe Settings

@@ -9,7 +9,9 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--url", type=str, help="Конкретный URL для тестирования")
         parser.add_argument(
-            "--all", action="store_true", help="Запустить тест всех примеров URL"
+            "--all",
+            action="store_true",
+            help="Запустить тест всех примеров URL",
         )
 
     def handle(self, *args, **options):
@@ -102,8 +104,8 @@ class Command(BaseCommand):
         # Инструкции по использованию
         self.stdout.write(
             self.style.SUCCESS(
-                f"\n💡 ИСПОЛЬЗОВАНИЕ:"
+                "\n💡 ИСПОЛЬЗОВАНИЕ:"
                 f"\n   python manage.py test_youtube_validator --all"
-                f"\n   python manage.py test_youtube_validator --url 'https://youtube.com/watch?v=123'"
+                "\n   python manage.py test_youtube_validator --url 'https://youtube.com/watch?v=123'"
             )
         )

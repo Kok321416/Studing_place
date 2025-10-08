@@ -7,8 +7,6 @@ import os
 import sys
 import subprocess
 import django
-from django.conf import settings
-from django.test.utils import get_runner
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")

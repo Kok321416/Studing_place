@@ -15,7 +15,10 @@ class Command(BaseCommand):
             help="Email админ пользователя",
         )
         parser.add_argument(
-            "--password", type=str, default="admin123", help="Пароль админ пользователя"
+            "--password",
+            type=str,
+            default="admin123",
+            help="Пароль админ пользователя",
         )
         parser.add_argument(
             "--username", type=str, default="admin", help="Имя пользователя"
@@ -34,7 +37,7 @@ class Command(BaseCommand):
             return
 
         # Создаем суперпользователя
-        user = User.objects.create_superuser(
+        User.objects.create_superuser(
             username=username,
             email=email,
             password=password,
@@ -42,11 +45,11 @@ class Command(BaseCommand):
             last_name="Пользователь",
         )
 
-        self.stdout.write(self.style.SUCCESS(f"✅ Создан суперпользователь!"))
+        self.stdout.write(self.style.SUCCESS("✅ Создан суперпользователь!"))
         self.stdout.write(f"📧 Email: {email}")
         self.stdout.write(f"👤 Username: {username}")
         self.stdout.write(f"🔑 Пароль: {password}")
-        self.stdout.write(f"🌐 Админка: http://localhost:8000/admin/")
+        self.stdout.write("🌐 Админка: http://localhost:8000/admin/")
 
         self.stdout.write("\n" + "=" * 50)
         self.stdout.write("ИНСТРУКЦИЯ ПО ИСПОЛЬЗОВАНИЮ:")

@@ -31,7 +31,10 @@ class Migration(migrations.Migration):
                     "preview",
                     models.ImageField(upload_to="course/", verbose_name="Превью курса"),
                 ),
-                ("description", models.TextField(verbose_name="Описание курса")),
+                (
+                    "description",
+                    models.TextField(verbose_name="Описание курса"),
+                ),
             ],
             options={
                 "verbose_name": "Курс",
@@ -60,8 +63,14 @@ class Migration(migrations.Migration):
                         upload_to="lesson_previews/", verbose_name="Превью"
                     ),
                 ),
-                ("description", models.TextField(verbose_name="Описание урока")),
-                ("video_link", models.URLField(verbose_name="Ссылка на видео")),
+                (
+                    "description",
+                    models.TextField(verbose_name="Описание урока"),
+                ),
+                (
+                    "video_link",
+                    models.URLField(verbose_name="Ссылка на видео"),
+                ),
                 (
                     "course",
                     models.ForeignKey(

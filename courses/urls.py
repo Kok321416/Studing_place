@@ -17,7 +17,11 @@ urlpatterns = [
     path("lessons/", LessonListCreateView.as_view(), name="lesson-list-create"),
     path("lessons/<int:pk>/", LessonDetailView.as_view(), name="lesson-detail"),
     # Subscription API
-    path("subscription/", SubscriptionAPIView.as_view(), name="course-subscription"),
+    path(
+        "subscription/",
+        SubscriptionAPIView.as_view(),
+        name="course-subscription",
+    ),
     # HTML views
     path("html/courses/", course_list_view, name="course_list"),
     path("html/lessons/", lesson_list_view, name="lesson_list"),

@@ -6,7 +6,10 @@ from django.utils import timezone
 class Course(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название курса")
     preview = models.ImageField(
-        upload_to="course_previews/", verbose_name="Превью курса", null=True, blank=True
+        upload_to="course_previews/",
+        verbose_name="Превью курса",
+        null=True,
+        blank=True,
     )
     description = models.TextField(verbose_name="Описание курса")
     price = models.DecimalField(
@@ -40,11 +43,17 @@ class Lesson(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название урока")
     description = models.TextField(verbose_name="Описание урока")
     preview = models.ImageField(
-        upload_to="lesson_previews/", verbose_name="Превью", null=True, blank=True
+        upload_to="lesson_previews/",
+        verbose_name="Превью",
+        null=True,
+        blank=True,
     )
     video_link = models.URLField(verbose_name="Ссылка на видео")
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, related_name="lessons", verbose_name="Курс"
+        Course,
+        on_delete=models.CASCADE,
+        related_name="lessons",
+        verbose_name="Курс",
     )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -10,7 +10,10 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("courses", "0002_course_created_at_course_owner_course_updated_at_and_more"),
+        (
+            "courses",
+            "0002_course_created_at_course_owner_course_updated_at_and_more",
+        ),
     ]
 
     operations = [
@@ -29,7 +32,8 @@ class Migration(migrations.Migration):
                 (
                     "created_at",
                     models.DateTimeField(
-                        default=django.utils.timezone.now, verbose_name="Дата подписки"
+                        default=django.utils.timezone.now,
+                        verbose_name="Дата подписки",
                     ),
                 ),
                 (

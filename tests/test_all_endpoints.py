@@ -5,7 +5,7 @@ from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-from courses.models import Course, Lesson, Subscription
+from courses.models import Course, Lesson
 
 User = get_user_model()
 
@@ -330,7 +330,9 @@ class HTMLViewsTestCase(TestCase):
         )
 
         self.course = Course.objects.create(
-            title="Тестовый курс", description="Описание курса", owner=self.user
+            title="Тестовый курс",
+            description="Описание курса",
+            owner=self.user,
         )
 
         self.lesson = Lesson.objects.create(
@@ -389,7 +391,9 @@ class ValidationTestCase(APITestCase):
         )
 
         self.course = Course.objects.create(
-            title="Тестовый курс", description="Описание курса", owner=self.user
+            title="Тестовый курс",
+            description="Описание курса",
+            owner=self.user,
         )
 
     def test_youtube_url_validation_valid_urls(self):

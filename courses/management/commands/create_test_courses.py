@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from courses.models import Course, Lesson
 from decimal import Decimal
-import random
 
 User = get_user_model()
 
@@ -230,7 +229,7 @@ class Command(BaseCommand):
         self.stdout.write("ИНФОРМАЦИЯ ДЛЯ ТЕСТИРОВАНИЯ:")
         self.stdout.write("=" * 50)
         self.stdout.write(f"Тестовый пользователь: {test_user.email}")
-        self.stdout.write(f"Пароль: testpass123")
+        self.stdout.write("Пароль: testpass123")
         self.stdout.write(f"Всего курсов в системе: {Course.objects.count()}")
         self.stdout.write(f"Всего уроков в системе: {Lesson.objects.count()}")
         self.stdout.write("\nДля просмотра курсов с оплатой перейдите по адресу:")

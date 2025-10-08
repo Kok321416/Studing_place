@@ -75,13 +75,18 @@ class Payment(models.Model):
         max_digits=10, decimal_places=2, verbose_name="Сумма оплаты"
     )
     payment_method = models.CharField(
-        max_length=20, choices=PAYMENT_METHOD_CHOICES, verbose_name="Способ оплаты"
+        max_length=20,
+        choices=PAYMENT_METHOD_CHOICES,
+        verbose_name="Способ оплаты",
     )
     payment_date = models.DateTimeField(auto_now_add=True, verbose_name="Дата оплаты")
 
     # Stripe fields
     stripe_payment_intent_id = models.CharField(
-        max_length=255, blank=True, null=True, verbose_name="Stripe Payment Intent ID"
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="Stripe Payment Intent ID",
     )
     stripe_session_id = models.CharField(
         max_length=255, blank=True, null=True, verbose_name="Stripe Session ID"

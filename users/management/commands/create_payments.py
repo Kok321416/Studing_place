@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 from users.models import User, Payment
 from courses.models import Course, Lesson
 from decimal import Decimal
-from django.utils import timezone
 
 
 class Command(BaseCommand):

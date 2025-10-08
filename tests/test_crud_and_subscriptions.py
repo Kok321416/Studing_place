@@ -1,4 +1,3 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.urls import reverse
@@ -110,7 +109,10 @@ class CoursesCRUDTestCase(APITestCase):
         """Тест обновления курса владельцем"""
         self.client.force_authenticate(user=self.owner_user)
         url = reverse("course-detail", kwargs={"pk": self.course.pk})
-        data = {"title": "Обновленный курс", "description": "Обновленное описание"}
+        data = {
+            "title": "Обновленный курс",
+            "description": "Обновленное описание",
+        }
         response = self.client.patch(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -429,8 +431,8 @@ class PaginationTestCase(APITestCase):
         self.courses = []
         for i in range(15):
             course = Course.objects.create(
-                title=f"Курс {i+1}",
-                description=f"Описание курса {i+1}",
+                title=f"Курс {i + 1}",
+                description=f"Описание курса {i + 1}",
                 owner=self.user,
             )
             self.courses.append(course)
@@ -439,9 +441,9 @@ class PaginationTestCase(APITestCase):
         self.lessons = []
         for i in range(25):
             lesson = Lesson.objects.create(
-                title=f"Урок {i+1}",
-                description=f"Описание урока {i+1}",
-                video_link=f"https://youtube.com/watch?v=test{i+1}",
+                title=f"Урок {i + 1}",
+                description=f"Описание урока {i + 1}",
+                video_link=f"https://youtube.com/watch?v=test{i + 1}",
                 course=self.courses[i % len(self.courses)],
                 owner=self.user,
             )

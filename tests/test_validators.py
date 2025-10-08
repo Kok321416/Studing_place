@@ -68,7 +68,8 @@ class YouTubeValidatorTest(TestCase):
                     result = validate_youtube_url(value)
                     # Пустые значения должны возвращать None (пропускаются)
                     self.assertIsNone(
-                        result, f"Пустое значение должно возвращать None: {repr(value)}"
+                        result,
+                        f"Пустое значение должно возвращать None: {repr(value)}",
                     )
                 except ValidationError:
                     self.fail(
