@@ -68,7 +68,7 @@ jobs:
   build-and-deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: (github.ref == 'refs/heads/32_2' || github.ref == 'refs/heads/develop_35.2') && github.event_name == 'push'
+    if: github.ref == 'refs/heads/develop_35.2' && github.event_name == 'push'
     
     steps:
     - uses: actions/checkout@v3
@@ -94,17 +94,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /var/www/studing_place
-          
-          # Определяем ветку для деплоя
-          if [ "${{ github.ref }}" = "refs/heads/32_2" ]; then
-            BRANCH="32_2"
-          elif [ "${{ github.ref }}" = "refs/heads/develop_35.2" ]; then
-            BRANCH="develop_35.2"
-          else
-            BRANCH="32_2"
-          fi
-          
-          git pull origin $BRANCH
+          git pull origin develop_35.2
           
           # Остановка старых контейнеров
           docker-compose down || true
