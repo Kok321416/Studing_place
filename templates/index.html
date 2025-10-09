@@ -1,139 +1,275 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Studing Place - Главная{% endblock %}
+{% block title %}Главная - Studing Place{% endblock %}
 
 {% block content %}
-<div class="hero-section">
-    <h1 class="hero-title">Добро пожаловать в Studing Place</h1>
-    <p class="hero-subtitle">Современная платформа для онлайн-обучения с инновационными технологиями</p>
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="/courses/" class="btn">
-            <i class="fas fa-rocket"></i> Начать обучение
-        </a>
-        <a href="/users/" class="btn btn-secondary">
-            <i class="fas fa-user-plus"></i> Регистрация
-        </a>
+<!-- Hero секция -->
+<section class="hero-section bg-gradient-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="text-gradient mb-4">
+                    Добро пожаловать в Studing Place
+                </h1>
+                <p class="text-muted">Главная страница</p>
+                <p class="lead text-muted mb-4">
+                    Современная образовательная платформа, где вы можете изучать новые навыки, 
+                    проходить курсы и получать качественные знания от экспертов.
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'course_list' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-book me-2"></i>
+                            Начать обучение
+                        </a>
+                        <a href="{% url 'user-profile' %}" class="btn btn-outline-dark btn-lg">
+                            <i class="fas fa-user me-2"></i>
+                            Мой профиль
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user-registration' %}" class="btn btn-primary btn-lg btn-pulse">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Зарегистрироваться
+                        </a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-dark btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            Войти
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
-<div class="grid">
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-book-open"></i>
+<!-- Основные возможности -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="text-gradient">Основные возможности</h2>
+                <p class="text-muted">Все что нужно для эффективного обучения</p>
+            </div>
         </div>
-        <h3>Курсы</h3>
-        <p>Доступ к качественным образовательным материалам по различным направлениям</p>
-        <a href="/courses/" class="btn" style="margin-top: 1rem; font-size: 0.9rem;">
-            <i class="fas fa-arrow-right"></i> Перейти к курсам
-        </a>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card shadow-custom shadow-hover">
+                    <div class="feature-icon text-primary">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3>Интерактивные курсы</h3>
+                    <p class="text-muted">
+                        Изучайте новые темы через структурированные курсы с практическими заданиями 
+                        и интерактивными элементами.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card shadow-custom shadow-hover">
+                    <div class="feature-icon text-success">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Видео уроки</h3>
+                    <p class="text-muted">
+                        Смотрите качественные видео уроки от опытных преподавателей 
+                        и практикуйтесь с реальными примерами.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card shadow-custom shadow-hover">
+                    <div class="feature-icon text-info">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Сообщество</h3>
+                    <p class="text-muted">
+                        Общайтесь с другими студентами, задавайте вопросы 
+                        и делитесь своими достижениями.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card shadow-custom shadow-hover">
+                    <div class="feature-icon text-warning">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Прогресс обучения</h3>
+                    <p class="text-muted">
+                        Отслеживайте свой прогресс, получайте сертификаты 
+                        и достигайте новых высот в обучении.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card shadow-custom shadow-hover">
+                    <div class="feature-icon text-danger">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Мобильное приложение</h3>
+                    <p class="text-muted">
+                        Учитесь в любом месте и в любое время с помощью 
+                        нашего удобного мобильного приложения.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="feature-card shadow-custom shadow-hover">
+                    <div class="feature-icon" style="color: #6f42c1;">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>API для разработчиков</h3>
+                    <p class="text-muted">
+                        Интегрируйте нашу платформу в ваши приложения 
+                        с помощью мощного REST API.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
+</section>
 
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-play-circle"></i>
+<!-- API информация -->
+<section class="py-5 bg-gradient-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="text-gradient">API для разработчиков</h2>
+                <p class="text-muted">Интегрируйте нашу платформу в ваши проекты</p>
+            </div>
         </div>
-        <h3>Уроки</h3>
-        <p>Интерактивные уроки с видео-материалами и практическими заданиями</p>
-        <a href="/lessons/" class="btn" style="margin-top: 1rem; font-size: 0.9rem;">
-            <i class="fas fa-arrow-right"></i> Перейти к урокам
-        </a>
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card card-dark shadow-custom">
+                    <div class="card-body">
+                        <h5 class="card-title text-light mb-4">
+                            <i class="fas fa-code me-2"></i>
+                            REST API Endpoints
+                        </h5>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="badge bg-success me-3">GET</span>
+                                    <code>/api/courses/</code>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="badge bg-primary me-3">POST</span>
+                                    <code>/api/courses/</code>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="badge bg-info me-3">GET</span>
+                                    <code>/api/lessons/</code>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="badge bg-warning me-3">POST</span>
+                                    <code>/api/lessons/</code>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="badge bg-secondary me-3">POST</span>
+                                    <code>/api/token/</code>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <span class="badge bg-dark me-3">GET</span>
+                                    <code>/api/users/</code>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="text-center">
+                            <a href="{% url 'token_obtain_pair' %}" class="btn btn-outline-primary me-3">
+                                <i class="fas fa-key me-2"></i>
+                                Получить токен
+                            </a>
+                            <a href="/api/docs/" class="btn btn-outline-success">
+                                <i class="fas fa-book me-2"></i>
+                                Документация
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</section>
 
-    <div class="feature-card">
-        <div class="feature-icon">
-            <i class="fas fa-users"></i>
+<!-- Статистика -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body">
+                        <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                        <h3 class="text-gradient">{{ courses_count|default:"0" }}</h3>
+                        <p class="text-muted">Курсов доступно</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-4">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body">
+                        <i class="fas fa-play-circle fa-3x text-success mb-3"></i>
+                        <h3 class="text-gradient">{{ lessons_count|default:"0" }}</h3>
+                        <p class="text-muted">Уроков создано</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-4">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-3x text-info mb-3"></i>
+                        <h3 class="text-gradient">{{ users_count|default:"0" }}</h3>
+                        <p class="text-muted">Активных пользователей</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-4">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body">
+                        <i class="fas fa-clock fa-3x text-warning mb-3"></i>
+                        <h3 class="text-gradient">{{ hours_learned|default:"0" }}</h3>
+                        <p class="text-muted">Часов изучено</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h3>Сообщество</h3>
-        <p>Присоединяйтесь к сообществу учащихся и преподавателей</p>
-        <a href="/users/" class="btn" style="margin-top: 1rem; font-size: 0.9rem;">
-            <i class="fas fa-arrow-right"></i> Присоединиться
-        </a>
     </div>
-</div>
+</section>
 
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-code"></i> API Endpoints
-    </h2>
-    <p class="card-content">
-        Наша платформа предоставляет RESTful API для интеграции с внешними системами и создания мобильных приложений.
-    </p>
-    
-    <div class="api-endpoint">
-        <span class="method get">GET</span>
-        <strong>/api/courses/</strong> - Список всех курсов
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method post">POST</span>
-        <strong>/api/courses/</strong> - Создание нового курса
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method get">GET</span>
-        <strong>/api/courses/{id}/</strong> - Детали курса
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method put">PUT</span>
-        <strong>/api/courses/{id}/</strong> - Обновление курса
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method delete">DELETE</span>
-        <strong>/api/courses/{id}/</strong> - Удаление курса
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method get">GET</span>
-        <strong>/api/courses/lessons/</strong> - Список всех уроков
-    </div>
-    
-    <div class="api-endpoint">
-        <span class="method get">GET</span>
-        <strong>/api/users/</strong> - Список пользователей (требует авторизации)
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-shield-alt"></i> Безопасность и авторизация
-    </h2>
-    <p class="card-content">
-        Платформа использует современные стандарты безопасности и JWT-токены для авторизации пользователей.
-    </p>
-    
-    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
-        <a href="/admin/" class="btn">
-            <i class="fas fa-cog"></i> Административная панель
-        </a>
-        <a href="/api/" class="btn btn-secondary">
-            <i class="fas fa-code"></i> API Документация
-        </a>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-title">
-        <i class="fas fa-chart-line"></i> Статистика платформы
-    </h2>
-    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-        <div style="text-align: center; padding: 1rem;">
-            <div style="font-size: 2.5rem; color: var(--primary-purple); font-weight: bold;">∞</div>
-            <div style="color: var(--gray-800);">Курсов</div>
-        </div>
-        <div style="text-align: center; padding: 1rem;">
-            <div style="font-size: 2.5rem; color: var(--primary-purple); font-weight: bold;">∞</div>
-            <div style="color: var(--gray-800);">Уроков</div>
-        </div>
-        <div style="text-align: center; padding: 1rem;">
-            <div style="font-size: 2.5rem; color: var(--primary-purple); font-weight: bold;">∞</div>
-            <div style="color: var(--gray-800);">Пользователей</div>
-        </div>
-        <div style="text-align: center; padding: 1rem;">
-            <div style="font-size: 2.5rem; color: var(--primary-purple); font-weight: bold;">24/7</div>
-            <div style="color: var(--gray-800);">Доступность</div>
+<!-- Call to Action -->
+{% if not user.is_authenticated %}
+<section class="py-5 bg-gradient-dark text-light">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h2 class="mb-4">Готовы начать обучение?</h2>
+                <p class="lead mb-4">
+                    Присоединяйтесь к тысячам студентов, которые уже изучают новые навыки 
+                    на нашей платформе!
+                </p>
+                <a href="{% url 'user-registration' %}" class="btn btn-primary btn-lg btn-pulse">
+                    <i class="fas fa-rocket me-2"></i>
+                    Начать сейчас
+                </a>
+            </div>
         </div>
     </div>
-</div>
+</section>
+{% endif %}
 {% endblock %}

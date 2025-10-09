@@ -28,7 +28,9 @@ class Migration(migrations.Migration):
                 (
                     "amount",
                     models.DecimalField(
-                        decimal_places=2, max_digits=10, verbose_name="Сумма оплаты"
+                        decimal_places=2,
+                        max_digits=10,
+                        verbose_name="Сумма оплаты",
                     ),
                 ),
                 (
